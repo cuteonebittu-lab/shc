@@ -1,8 +1,12 @@
 import React from 'react';
 import EditableText from './EditableText';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
+library.add(fas);
 interface ServiceCardProps {
-  icon: string;
+  icon: string; 
   title: string;
   description: string;
   page?: string;
@@ -22,7 +26,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   
   return (
     <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition">
-      <i className={`fas ${icon} text-green-700 text-4xl mb-4`}></i>
+      <FontAwesomeIcon icon={icon.split(' ') as any} className="text-green-700 text-4xl mb-4" />
       <EditableText
         page={page}
         section={section}

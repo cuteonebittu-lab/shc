@@ -42,16 +42,16 @@ const Contact = () => {
 
           <div className="bg-white p-8 rounded-2xl shadow-md">
             <p className="mb-4 text-lg text-gray-800">
-              <span role="img" aria-label="location">📍</span> Address: {contactInfo.address}
+              <span role="img" aria-label="location">📍</span> Address: <EditableText page="contact" section="info" field="address" defaultValue={contactInfo.address} tag="span" className="inline" />
             </p>
             <p className="mb-4 text-lg text-gray-800">
-              <span role="img" aria-label="phone">📞</span> Phone: {contactInfo.phone}
+              <span role="img" aria-label="phone">📞</span> Phone: <EditableText page="contact" section="info" field="phone" defaultValue={contactInfo.phone} tag="span" className="inline" />
             </p>
             <p className="mb-4 text-lg text-gray-800">
-              <span role="img" aria-label="email">✉️</span> Email: {contactInfo.email}
+              <span role="img" aria-label="email">✉️</span> Email: <EditableText page="contact" section="info" field="email" defaultValue={contactInfo.email} tag="span" className="inline" />
             </p>
             <p className="mb-4 text-lg text-gray-800">
-              <span role="img" aria-label="time">⏰</span> Timings: {contactInfo.timings}
+              <span role="img" aria-label="time">⏰</span> Timings: <EditableText page="contact" section="info" field="timings" defaultValue={contactInfo.timings} tag="span" className="inline" />
             </p>
             <a 
               href={`https://wa.me/${contactInfo.whatsapp}`}

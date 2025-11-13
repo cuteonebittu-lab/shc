@@ -89,7 +89,7 @@ const Home: React.FC = () => {
               description="Comprehensive care for diabetes, hypertension, thyroid, and lifestyle disorders."
             />
             <ServiceCard
-              icon="fa-solid fa-pancreas"
+              icon="fa-solid fa-candy-cane"
               title="Diabetes and Complications"
               description="Specialized management for diabetes, including prevention and treatment of complications."
             />
@@ -114,7 +114,7 @@ const Home: React.FC = () => {
               description="Comprehensive management for liver diseases and promoting liver health."
             />
             <ServiceCard
-              icon="fa-solid fa-kidneys"
+              icon="fa-solid fa-water"
               title="Renal Disorders"
               description="Treatment and management of kidney diseases and urinary tract issues."
             />

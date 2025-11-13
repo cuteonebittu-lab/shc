@@ -107,9 +107,31 @@ const Services = () => {
                 variants={fadeIn}
                 className="bg-gray-50 p-8 rounded-2xl shadow-md text-center hover:shadow-lg transition-shadow duration-300"
               >
-                <span className="text-4xl mb-4 inline-block">{service.icon}</span>
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-gray-600">{service.description}</p>
+                <EditableText
+                  page="services"
+                  section={`dr-dhirendra-service-${index}`}
+                  field="icon"
+                  defaultValue={service.icon}
+                  tag="span"
+                  className="text-4xl mb-4 inline-block"
+                />
+                <EditableText
+                  page="services"
+                  section={`dr-dhirendra-service-${index}`}
+                  field="title"
+                  defaultValue={service.title}
+                  tag="h3"
+                  className="text-xl font-semibold mb-2"
+                />
+                <EditableText
+                  page="services"
+                  section={`dr-dhirendra-service-${index}`}
+                  field="description"
+                  defaultValue={service.description}
+                  tag="p"
+                  className="text-gray-600"
+                  multiline={true}
+                />
               </motion.div>
             ))}
           </div>
@@ -147,9 +169,31 @@ const Services = () => {
                 variants={fadeIn}
                 className="bg-white p-8 rounded-2xl shadow-md text-center hover:shadow-lg transition-shadow duration-300"
               >
-                <span className="text-4xl mb-4 inline-block">{service.icon}</span>
-                <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                <p className="text-gray-600">{service.description}</p>
+                <EditableText
+                  page="services"
+                  section={`dr-sunitha-service-${index}`}
+                  field="icon"
+                  defaultValue={service.icon}
+                  tag="span"
+                  className="text-4xl mb-4 inline-block"
+                />
+                <EditableText
+                  page="services"
+                  section={`dr-sunitha-service-${index}`}
+                  field="title"
+                  defaultValue={service.title}
+                  tag="h3"
+                  className="text-xl font-semibold mb-2"
+                />
+                <EditableText
+                  page="services"
+                  section={`dr-sunitha-service-${index}`}
+                  field="description"
+                  defaultValue={service.description}
+                  tag="p"
+                  className="text-gray-600"
+                  multiline={true}
+                />
               </motion.div>
             ))}
           </div>
