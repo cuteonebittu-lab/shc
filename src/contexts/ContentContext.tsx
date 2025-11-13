@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 export interface ContentItem {
   id: string;
   value: string;
-  type: 'text' | 'image' | 'number';
+  type: 'text' | 'image' | 'number' | 'json';
   page: string;
   section: string;
   field: string;
@@ -17,6 +17,9 @@ interface ContentContextType {
   setIsEditing: (editing: boolean) => void;
   updateContent: (id: string, value: string) => void;
   getContent: (page: string, section: string, field: string, defaultValue: string) => string;
+  getJsonContent: <T>(page: string, section: string, field: string, defaultValue: T) => T;
+  addBlogPost: (newPost: { id: string; title: string; excerpt: string; image: string; category: string; date: string; author: string; }) => void;
+  deleteBlogPost: (id: string) => void;
 }
 
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
@@ -89,13 +92,56 @@ export const ContentProvider: React.FC<ContentProviderProps> = ({ children }) =>
     return defaultValue;
   };
 
+  const getJsonContent = <T,>(page: string, section: string, field: string, defaultValue: T): T => {
+    const id = `${page}-${section}-${field}`;
+    if (content[id] && content[id].type === 'json') {
+      try {
+        return JSON.parse(content[id].value) as T;
+      } catch (e) {
+        console.error(`Error parsing JSON content for ${id}:`, e);
+        return defaultValue;
+      }
+    }
+
+    // If content doesn't exist, create it with default value
+    if (defaultValue !== undefined) {
+      setContent(prev => ({
+        ...prev,
+        [id]: {
+          id,
+          value: JSON.stringify(defaultValue),
+          type: 'json',
+          page,
+          section,
+          field
+        }
+      }));
+    }
+    return defaultValue;
+  };
+
+  const addBlogPost = (newPost: { id: string; title: string; excerpt: string; image: string; category: string; date: string; author: string; }) => {
+    const blogPosts = getJsonContent<{ [key: string]: any }>('blog', 'posts', 'list', {});
+    blogPosts[newPost.id] = newPost;
+    updateContent('blog-posts-list', JSON.stringify(blogPosts));
+  };
+
+  const deleteBlogPost = (id: string) => {
+    const blogPosts = getJsonContent<{ [key: string]: any }>('blog', 'posts', 'list', {});
+    delete blogPosts[id];
+    updateContent('blog-posts-list', JSON.stringify(blogPosts));
+  };
+
   return (
     <ContentContext.Provider value={{
       content,
       isEditing,
       setIsEditing,
       updateContent,
-      getContent
+      getContent,
+      getJsonContent,
+      addBlogPost,
+      deleteBlogPost
     }}>
       {children}
     </ContentContext.Provider>
