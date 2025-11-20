@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ServiceCard from '../components/ServiceCard';
 import WhyChooseUs from '../components/WhyChooseUs';
 import EditableText from '../components/EditableText';
@@ -38,7 +39,10 @@ const Home: React.FC = () => {
           </div>
           <div className="md:w-1/2 md:pl-10 mt-8 md:mt-0">
             <div className="flex items-center mb-4">
+<<<<<<< HEAD
               <img src="/assets/images/shc_logo_exact.svg" alt="Holistic Healthcare Logo" className="h-12 mr-4" />
+=======
+>>>>>>> 43d6f935580b1dfe8369dacca4b7e18ee72a4cb7
               <EditableText
                 page="home"
                 section="about"

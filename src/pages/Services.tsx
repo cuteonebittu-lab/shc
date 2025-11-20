@@ -21,13 +21,14 @@ const services = {
     { icon: '🦴', title: 'Joint & Bone Disorders (Arthritis, Osteoporosis)', description: 'Pain management, physiotherapy integration.' },
     { icon: '🩺', title: 'General Health Check-ups', description: 'Preventive health screenings, vaccinations, medical reviews.' },
     { icon: '💉', title: 'Post-COVID Recovery & Fatigue', description: 'Immunity restoration, lung function support, energy tonics.' },
-    { icon: '💊', title: 'Chronic Disease Management', description: 'Long-term care with integrated follow-up and medical supervision.' }
+    { icon: '💊', title: 'Chronic Disease Management', description: 'Long-term care with integrated follow-up and medical supervision.' },
+    { icon: '👵', title: 'Geriatric Care', description: 'Specialized care for elderly patients, focusing on age-related health issues.' }
   ],
   drSunitha: [
     { icon: '🌿', title: 'Detoxification Therapy', description: 'Complete body cleansing and rejuvenation treatments.' },
     { icon: '💆', title: 'Stress, Anxiety & Insomnia (Manasika Rogas)', description: 'Oil Drip Therapy, Nasal Administration, Oil Massage, herbal support.' },
     { icon: '🍎', title: 'Obesity & Weight Management', description: 'Herbal fat-burners, metabolic correction, yoga, and diet.' },
-    { icon: '💗', title: 'Cardiac Health (Hridroga)', description: 'Heart-strengthening herbs and Rasayana therapy.' },
+    { icon: '⚕️', title: 'Spine and nerve diseases', description: 'Ayurvedic treatments for back pain, sciatica, and neurological support.' },
     { icon: '🤰', title: 'Women’s Health (PCOD, Menstrual Disorders)', description: 'Hormonal balancing, fertility care, and prenatal therapies.' },
     { icon: '👶', title: 'Pediatric Care (Bal Chikitsa)', description: 'Immunity boosting and growth support with herbal tonics.' },
     { icon: '🦴', title: 'Joint & Bone Disorders (Sandhivata, Osteoarthritis)', description: 'Ayurvedic massage, medicated oils, and herbal formulations.' },

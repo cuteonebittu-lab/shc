@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import EditableText from './EditableText';
 
 const Footer: React.FC = () => {
