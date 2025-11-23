@@ -1,6 +1,6 @@
 const WhatsAppButton = () => {
-  const whatsappNumber = '8976871584'; // Replace with actual WhatsApp number
-  const callNumber = '+8976871584'; // Replace with actual call number
+  const whatsappNumber = '+918976871584'; // Replace with actual WhatsApp number
+  const callNumber = '+918976871584'; // Replace with actual call number
 
   return (
     <div className="fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
