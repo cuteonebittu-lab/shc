@@ -6,7 +6,7 @@ import EditableImage from '../components/EditableImage';
 
 // Use DoctorCard component directly; no 'any' cast needed
 
-const doctors = [
+export const doctors = [
   {
     name: 'Dhirendra Yadav',
     title: 'MBBS, MD General Medicine, CCDM (Diabetes)',
@@ -14,7 +14,8 @@ const doctors = [
     experience: '15+ years',
     image: '/assets/dr-dhirendra-yadav.svg',
     description: 'Dhirendra Yadav is a highly experienced general physician with expertise in managing chronic diseases and preventive healthcare.',
-    timings: '7:00 pm to 9:30 pm',
+    inClinicTimings: '7:00 pm to 9:30 pm',
+    videoTimings: '6:00 pm to 7:00 pm', // Added video consultation timing
   },
   {
     name: 'Sunitha Yadav',
@@ -23,7 +24,8 @@ const doctors = [
     experience: '12+ years',
     image: '/assets/dr-sunitha-yadav.svg',
     description: 'Sunitha Yadav specializes in traditional Ayurvedic treatments and has helped numerous patients achieve holistic wellness.',
-    timings: '10:00 am to 1:30 pm',
+    inClinicTimings: '10:00 am to 1:30 pm',
+    videoTimings: '6:00 pm to 7:00 pm', // Added video consultation timing
   },
 ];
 
@@ -131,7 +133,7 @@ const About = () => {
                 name={doctor.name}
                 specialization={doctor.specialty}
                 qualifications={[doctor.title]}
-                availability={doctor.timings}
+                availability={doctor.inClinicTimings}
               />
             ))}
           </div>

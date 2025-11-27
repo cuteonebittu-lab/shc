@@ -1,8 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { doctors } from './About';
+import { getDoctorTimings, generateTimeSlots } from '../utils/appointmentUtils';
+import Select from '../components/ui/Select'; // Import the custom Select component
 
 // Form validation schema
 const appointmentSchema = z.object({
@@ -11,11 +15,7 @@ const appointmentSchema = z.object({
   gender: z.enum(['Male', 'Female', 'Other', ''], { message: 'Please select a gender' }),
   mobileNumber: z.string().regex(/^[0-9]{10}$/, 'Please enter a valid 10-digit mobile number'),
   emailAddress: z.string().email('Please enter a valid email').optional().or(z.literal('')),
-  preferredDoctor: z.enum([
-    'Dr. Dhirendra Yadav - Consultant Physician (MBBS, MD Internal Medicine, CCDM)',
-    'Dr. Sunitha Yadav - Consultant Ayurveda Physician (BAMS, MD Ayurveda Medicine)',
-    ''
-  ], { message: 'Please select a doctor' }),
+  preferredDoctor: z.string().min(1, 'Please select a doctor'),
   consultationType: z.enum(['In-Clinic Visit', 'Online Video Consultation', ''], { message: 'Please select a consultation type' }),
   preferredDate: z.string().refine((val) => {
     const selectedDate = new Date(val);
@@ -33,10 +33,32 @@ const Appointment = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
   });
+
+  const preferredDoctor = watch('preferredDoctor');
+  const [timeSlots, setTimeSlots] = useState<{ value: string; label: string }[]>([]);
+  const consultationType = watch('consultationType'); // Watch for changes in consultation type
+
+  useEffect(() => {
+    if (preferredDoctor && consultationType) {
+      const timings = getDoctorTimings(preferredDoctor, consultationType);
+      if (timings) {
+        const slots = generateTimeSlots(timings);
+        setTimeSlots(slots);
+      } else {
+        setTimeSlots([]);
+      }
+      setValue('preferredTime', ''); // Reset preferred time when doctor or consultation type changes
+    } else {
+      setTimeSlots([]);
+      setValue('preferredTime', '');
+    }
+  }, [preferredDoctor, consultationType, setValue]);
 
   const onSubmit = async (data: AppointmentFormData) => {
     // Format the message for WhatsApp
@@ -55,6 +77,11 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/91XXXXXXXXXX?text=${encodedText}`, '_blank');
   };
+
+  const doctorOptions = doctors.map(doctor => ({
+    value: `${doctor.name} - ${doctor.title}`,
+    label: `${doctor.name} - ${doctor.title}`,
+  }));
 
   return (
     <>
@@ -163,20 +190,12 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
             </div>
 
             {/* Doctor Selection */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Preferred Doctor</label>
-              <select 
-                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" 
-                {...register('preferredDoctor')} 
-              >
-                <option value="">Select Doctor</option>
-                <option>Dr. Dhirendra Yadav - Consultant Physician (MBBS, MD Internal Medicine, CCDM)</option>
-                <option>Dr. Sunitha Yadav - Consultant Ayurveda Physician (BAMS, MD Ayurveda Medicine)</option>
-              </select>
-              {errors.preferredDoctor && (
-                <p className="mt-1 text-red-600 text-sm">{errors.preferredDoctor.message}</p>
-              )}
-            </div>
+            <Select
+              label="Preferred Doctor"
+              options={doctorOptions}
+              {...register('preferredDoctor')}
+              error={errors.preferredDoctor?.message}
+            />
 
             {/* Consultation Type */}
             <div>
@@ -191,8 +210,8 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
               </select>
               {errors.consultationType && (
                 <p className="mt-1 text-red-600 text-sm">{errors.consultationType.message}</p>
-              )}
-            </div>
+                )}
+              </div>
 
             {/* Date & Time */}
             <div className="grid md:grid-cols-2 gap-6">
@@ -207,17 +226,14 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
                   <p className="mt-1 text-red-600 text-sm">{errors.preferredDate.message}</p>
                 )}
               </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Preferred Time</label>
-                <input 
-                type="time" 
-                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" 
-                {...register('preferredTime')} 
+              <Select
+                label="Preferred Time"
+                options={timeSlots}
+                {...register('preferredTime')}
+                error={errors.preferredTime?.message}
+                disabled={!preferredDoctor || !consultationType}
+                helpText={!preferredDoctor ? 'Please select a doctor to see available time slots.' : !consultationType ? 'Please select a consultation type to see available time slots.' : ''}
               />
-                {errors.preferredTime && (
-                  <p className="mt-1 text-red-600 text-sm">{errors.preferredTime.message}</p>
-                )}
-              </div>
             </div>
 
             {/* Message */}
