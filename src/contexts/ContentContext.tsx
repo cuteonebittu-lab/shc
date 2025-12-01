@@ -76,21 +76,28 @@ export const ContentProvider: React.FC<ContentProviderProps> = ({ children }) =>
       return content[id].value;
     }
     
-    // If content doesn't exist, create it with default value
+    // If content doesn't exist, schedule creation with default value asynchronously
     if (defaultValue) {
-      setContent(prev => ({
-        ...prev,
-        [id]: {
-          id,
-          value: defaultValue,
-          type: 'text',
-          page,
-          section,
-          field
-        }
-      }));
+      // Schedule the state update to avoid setState during render of consuming components
+      setTimeout(() => {
+        setContent(prev => {
+          // If another render already populated it, keep existing
+          if (prev[id]) return prev;
+          return {
+            ...prev,
+            [id]: {
+              id,
+              value: defaultValue,
+              type: 'text',
+              page,
+              section,
+              field
+            }
+          };
+        });
+      }, 0);
     }
-    
+
     return defaultValue;
   };
 
@@ -104,20 +111,24 @@ export const ContentProvider: React.FC<ContentProviderProps> = ({ children }) =>
         return defaultValue;
       }
     }
-
-    // If content doesn't exist, create it with default value
+    // If content doesn't exist, schedule creation with default JSON value asynchronously
     if (defaultValue !== undefined) {
-      setContent(prev => ({
-        ...prev,
-        [id]: {
-          id,
-          value: JSON.stringify(defaultValue),
-          type: 'json',
-          page,
-          section,
-          field
-        }
-      }));
+      setTimeout(() => {
+        setContent(prev => {
+          if (prev[id]) return prev;
+          return {
+            ...prev,
+            [id]: {
+              id,
+              value: JSON.stringify(defaultValue),
+              type: 'json',
+              page,
+              section,
+              field
+            }
+          };
+        });
+      }, 0);
     }
     return defaultValue;
   };

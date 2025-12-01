@@ -29,7 +29,7 @@ export default defineConfig([
   - React Router for client routing
   - Forms with react-hook-form and validation via zod
   - SEO helpers (react-helmet-async)
-  - Image utilities and a script to generate placeholders
+  - Image utilities
 
   ## Tech stack
 
@@ -62,7 +62,7 @@ export default defineConfig([
   - `npm run build` — build the production bundle (runs `tsc -b && vite build`)
   - `npm run preview` — preview the production build locally
   - `npm run lint` — run ESLint across the repo
-  - `npm run generate-placeholders` — run the helper script in `scripts/` to generate placeholder assets
+  - (no placeholder-generator script included)
 
   ## Project structure (high level)
 
@@ -72,7 +72,7 @@ export default defineConfig([
     - `layouts/` — page layouts (e.g. `MainLayout`)
     - `assets/`, `styles/` — static styles and assets
   - `public/` — static public assets served as-is
-  - `scripts/` — helper scripts (e.g. `generate-placeholders.js`)
+  - `scripts/` — helper scripts
   - `vite.config.ts`, `tsconfig*.json`, `postcss.config.js`, `tailwind.config.js`
 
   ## Deployment

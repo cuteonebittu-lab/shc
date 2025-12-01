@@ -42,11 +42,11 @@ const Home: React.FC = () => {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6 md:flex items-center">
           <div className="md:w-1/2 flex items-center justify-center">
-            <img src="/assets/images/shc_logo_exact.svg" alt="Saanvi Healthcare Logo" className="rounded-2xl shadow-lg w-64 h-64 object-contain" />
+            <img src="/assets/images/shc_logo_exact.svg" alt="Saanvi Healthcare Logo" className="rounded-2xl shadow-lg w-64 h-64 object-contain" loading="lazy" />
           </div>
           <div className="md:w-1/2 md:pl-10 mt-8 md:mt-0">
             <div className="flex items-center mb-4">
-                <img src="/assets/images/shc_logo_exact.svg" alt="Holistic Healthcare Logo" className="h-12 mr-4" />
+                <img src="/assets/images/shc_logo_exact.svg" alt="Holistic Healthcare Logo" className="h-12 mr-4" loading="lazy" />
                 <EditableText
                 page="home"
                 section="about"

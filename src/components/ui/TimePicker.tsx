@@ -42,17 +42,20 @@ const TimePicker = ({
       )}
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-        {!disabled && timeSlots.length > 0 ? (
+        {timeSlots.length > 0 ? (
           timeSlots.map((slot, index) => (
             <motion.button
               key={slot.value}
               type="button"
               onClick={() => handleSelect(slot)}
-              disabled={!slot.available}
+              disabled={disabled || !slot.available}
+              aria-label={`Select ${slot.label}`}
+              aria-pressed={slot.value === value}
+              aria-disabled={disabled || !slot.available}
               className={`
                 px-3 py-2 rounded-lg text-sm border
                 ${slot.value === value ? 'bg-emerald-500 text-white border-emerald-500' : 'text-gray-700 border-gray-300'}
-                ${slot.available ? 'hover:bg-emerald-100 hover:border-emerald-300' : 'opacity-50 cursor-not-allowed bg-gray-100'}
+                ${disabled || !slot.available ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'hover:bg-emerald-100 hover:border-emerald-300'}
                 transition-all duration-200 ease-in-out
               `}
               initial={{ opacity: 0, y: 10 }}
@@ -67,7 +70,7 @@ const TimePicker = ({
           ))
         ) : (
           <div className="col-span-full text-sm text-gray-500 p-2 bg-gray-50 rounded-lg">
-            {helpText || 'Please select a doctor and date to see available times.'}
+            {helpText || 'Please select a doctor and consultation type to see available times.'}
           </div>
         )}
       </div>

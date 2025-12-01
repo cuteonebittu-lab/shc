@@ -35,9 +35,7 @@ const EditableText: React.FC<EditableTextProps> = ({
   const handleDoubleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Double-click detected, isEditing:', isEditing);
     if (isEditing) {
-      console.log('Entering edit mode for:', id);
       setIsEditingLocal(true);
       setTimeout(() => {
         if (inputRef.current) {
@@ -45,9 +43,7 @@ const EditableText: React.FC<EditableTextProps> = ({
           inputRef.current.select();
         }
       }, 0);
-    } else {
-      console.log('Edit mode is disabled. Click the admin panel to enable edit mode.');
-    }
+        }
   };
 
   const handleBlur = () => {
@@ -108,4 +104,4 @@ const EditableText: React.FC<EditableTextProps> = ({
   );
 };
 
-export default EditableText;
+export default React.memo(EditableText);

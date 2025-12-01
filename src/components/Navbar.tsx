@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img src="/assets/images/shc_logo_exact.svg" alt="Holistic Healthcare Logo" className="h-10 w-auto" />
+              <img src="/assets/images/shc_logo_exact.svg" alt="Holistic Healthcare Logo" className="h-10 w-auto" loading="lazy" />
             </Link>
           </div>
 
@@ -31,6 +31,7 @@ const Navbar = () => {
                 key={item.name}
                 to={item.href}
                 className="text-gray-600 hover:text-primary-600 transition-colors"
+                aria-label={`Go to ${item.name}`}
               >
                 {item.name}
               </Link>
@@ -38,6 +39,7 @@ const Navbar = () => {
             <Link
               to="/appointment"
               className="btn"
+              aria-label="Book an appointment"
             >
               Book Appointment
             </Link>
@@ -70,6 +72,7 @@ const Navbar = () => {
                   to={item.href}
                   className="text-gray-600 hover:text-primary-600 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-label={`Go to ${item.name}`}
                 >
                   {item.name}
                 </Link>
@@ -78,6 +81,7 @@ const Navbar = () => {
                 to="/appointment"
                 className="btn w-full text-center"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Book an appointment"
               >
                 Book Appointment
               </Link>

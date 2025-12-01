@@ -1,4 +1,4 @@
-import { doctors } from '../pages/About';
+import { doctors } from '../data/doctors';
 
 export interface Doctor {
   name: string;
@@ -13,7 +13,18 @@ export interface Doctor {
 
 export const getDoctorTimings = (doctorName: string | undefined, consultationType: string): string | undefined => {
   if (!doctorName) return undefined; // Handle undefined doctorName
-  const doctor = doctors.find(d => d.name === doctorName.split(' - ')[0]);
+
+  // doctorName is provided by the select as "Name - Title" (or just name). Extract a candidate name
+  const candidate = doctorName.includes(' - ') ? doctorName.split(' - ')[0].trim() : doctorName.trim();
+
+  // Try several matching strategies to be robust against whitespace/casing/format differences
+  let doctor = doctors.find(d => d.name === candidate);
+  if (!doctor) doctor = doctors.find(d => d.name.toLowerCase() === candidate.toLowerCase());
+  if (!doctor) {
+    // fallback: find if candidate contains stored name or vice-versa (substr match)
+    doctor = doctors.find(d => candidate.toLowerCase().includes(d.name.toLowerCase()) || d.name.toLowerCase().includes(candidate.toLowerCase()));
+  }
+
   if (!doctor) return undefined;
 
   if (consultationType === 'In-Clinic Visit') {
@@ -21,6 +32,7 @@ export const getDoctorTimings = (doctorName: string | undefined, consultationTyp
   } else if (consultationType === 'Online Video Consultation') {
     return doctor.videoTimings;
   }
+
   return undefined;
 };
 
@@ -32,7 +44,9 @@ export const generateTimeSlots = (timings: string, intervalMinutes: number = 30)
 
   const parseTime = (timeStr: string): Date | null => {
     const [time, ampm] = timeStr.toLowerCase().split(' ');
-    let [hours, minutes] = time.split(':').map(Number);
+    const timeparts = time.split(':').map(Number);
+    let hours = timeparts[0];
+    const minutes = timeparts[1];
 
     if (ampm === 'pm' && hours !== 12) hours += 12;
     if (ampm === 'am' && hours === 12) hours = 0;
@@ -48,7 +62,7 @@ export const generateTimeSlots = (timings: string, intervalMinutes: number = 30)
   if (!startTime || !endTime) return [];
 
   const slots: { value: string; label: string; available: boolean }[] = [];
-  let currentTime = startTime;
+  const currentTime = startTime;
 
   while (currentTime.getTime() <= endTime.getTime()) {
     const hours = currentTime.getHours();

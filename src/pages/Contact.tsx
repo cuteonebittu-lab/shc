@@ -1,13 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import EditableText from '../components/EditableText';
 import GoogleMap from '../components/GoogleMap';
+import { CLINIC_ADDRESS, CLINIC_PHONE, CLINIC_EMAIL, CLINIC_TIMINGS, CLINIC_WHATSAPP } from '../config/constants';
 
 const contactInfo = {
-  address: "No.6 Saraswati Sadan CHS, Sec: 23, Plot- 211, Juinagar, Navi Mumbai",
-  phone: "+91 89768 71584",
-  email: "saanvihealthcarecentre@gmail.com",
-  timings: "Monday–Saturday: 10:00 AM – 9:00 PM",
-  whatsapp: "+918976871584"
+  address: CLINIC_ADDRESS,
+  phone: CLINIC_PHONE,
+  email: CLINIC_EMAIL,
+  timings: CLINIC_TIMINGS,
+  whatsapp: CLINIC_WHATSAPP
 };
 
 const Contact = () => {
@@ -81,7 +82,7 @@ const Contact = () => {
           
           <div className="mt-8 text-center">
             <a 
-              href="https://maps.app.goo.gl/m1qetsREyBZhYUcb7"
+              href={`https://maps.app.goo.gl/m1qetsREyBZhYUcb7`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition-colors"

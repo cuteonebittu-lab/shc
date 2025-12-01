@@ -215,14 +215,9 @@ const Treatments = () => {
             Book a consultation with our experienced doctors to discuss your
             condition and treatment options.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/appointment" className="btn">
-              Book Appointment
-            </Link>
-            <Link to="/services" className="btn-secondary">
-              View All Services
-            </Link>
-          </div>
+          <Link to="/appointment" className="btn">
+            Book Appointment
+          </Link>
         </div>
       </section>
     </div>

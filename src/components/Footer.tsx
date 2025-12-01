@@ -1,14 +1,15 @@
 import EditableText from './EditableText';
+import { CLINIC_ADDRESS } from '../config/constants';
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-green-900 text-green-100 py-8 text-center">
-      <img src="/assets/images/shc_logo_exact.svg" alt="Saanvi Healthcare Centre Logo" className="h-12 mx-auto mb-2" />
+      <img src="/assets/images/shc_logo_exact.svg" alt="Saanvi Healthcare Centre Logo" className="h-12 mx-auto mb-2" loading="lazy" />
       <EditableText
         page="footer"
         section="contact"
         field="address"
-        defaultValue="Saanvi Healthcare Centre, No.6 Saraswati Sadan CHS, Sec: 23, Plot- 211, Juinagar, Navi Mumbai"
+        defaultValue={CLINIC_ADDRESS}
         tag="p"
         className="text-sm mb-2"
       />

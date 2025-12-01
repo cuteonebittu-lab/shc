@@ -1,16 +1,16 @@
 import { RouterProvider } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { ContentProvider } from './contexts/ContentContext';
 import { router } from './router';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
-    <HelmetProvider>
-      <ContentProvider>
-  <RouterProvider router={router} />
-      </ContentProvider>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 }
 
-export default App
+export default App;

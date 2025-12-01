@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { doctors } from './About';
+import { doctors } from '../data/doctors';
 import { getDoctorTimings, generateTimeSlots } from '../utils/appointmentUtils';
+import { CLINIC_WHATSAPP } from '../config/constants';
 import Select from '../components/ui/Select';
 import TimePicker from '../components/ui/TimePicker';
 import SuccessMessage from '../components/ui/SuccessMessage';
@@ -34,6 +35,7 @@ type AppointmentFormData = z.infer<typeof appointmentSchema>;
 const Appointment = () => {
   const {
     register,
+    control,
     handleSubmit,
     watch,
     setValue,
@@ -45,27 +47,25 @@ const Appointment = () => {
 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const preferredDoctor = watch('preferredDoctor');
-  const [timeSlots, setTimeSlots] = useState<{ value: string; label: string }[]>([]);
+  const preferredDate = watch('preferredDate');
+  const [timeSlots, setTimeSlots] = useState<{ value: string; label: string; available: boolean }[]>([]);
   const consultationType = watch('consultationType'); // Watch for changes in consultation type
 
   useEffect(() => {
-    if (preferredDoctor && consultationType) {
+    if (preferredDoctor && consultationType && preferredDate) {
       const timings = getDoctorTimings(preferredDoctor, consultationType);
       if (timings) {
         const slots = generateTimeSlots(timings);
         setTimeSlots(slots);
-        console.log('Generated time slots:', slots); // Debugging line
       } else {
         setTimeSlots([]);
-        console.log('No timings found for selected doctor/consultation type.'); // Debugging line
       }
-      setValue('preferredTime', ''); // Reset preferred time when doctor or consultation type changes
+      setValue('preferredTime', ''); // Reset preferred time when doctor, consultation type, or date changes
     } else {
       setTimeSlots([]);
       setValue('preferredTime', '');
-      console.log('Preferred Doctor or Consultation Type not selected.'); // Debugging line
     }
-}, [preferredDoctor, consultationType, setValue]);
+  }, [preferredDoctor, consultationType, preferredDate, setValue]);
 
   const onSubmit = async (data: AppointmentFormData) => {
     // Format the message for WhatsApp
@@ -82,14 +82,15 @@ Preferred Time: ${data.preferredTime}
 Additional Message: ${data.additionalMessage || 'No additional notes'}`;
 
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/${CLINIC_WHATSAPP}?text=${encodedText}`, '_blank');
 
     setShowSuccessMessage(true);
     reset(); // Reset form fields after submission
   };
 
   const doctorOptions = doctors.map(doctor => ({
-    value: `${doctor.name} - ${doctor.title}`,
+    // Use canonical name as the option value to avoid parsing fragility
+    value: doctor.name,
     label: `${doctor.name} - ${doctor.title}`,
   }));
 
@@ -110,6 +111,10 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
           content="Book your appointment at Saanvi Healthcare Centre with our expert General Physician or Ayurveda Specialist."
         />
         <meta name="keywords" content="Book doctor appointment, General Physician, Ayurveda Doctor, Saanvi Healthcare Centre" />
+        <meta property="og:title" content="Book Appointment | Saanvi Healthcare Centre" />
+        <meta property="og:description" content="Book your appointment at Saanvi Healthcare Centre with our expert General Physician or Ayurveda Specialist." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/assets/images/shc_logo_exact.svg" />
       </Helmet>
 
       {/* HERO */}
@@ -208,11 +213,18 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
             </div>
 
             {/* Doctor Selection */}
-            <Select
-              label="Preferred Doctor"
-              options={doctorOptions}
-              {...register('preferredDoctor')}
-              error={errors.preferredDoctor?.message}
+            <Controller
+              name="preferredDoctor"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Preferred Doctor"
+                  options={doctorOptions}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange((e.target as HTMLSelectElement).value)}
+                  error={errors.preferredDoctor?.message}
+                />
+              )}
             />
 
             {/* Consultation Type */}
@@ -251,8 +263,8 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
                 timeSlots={timeSlots}
                 error={errors.preferredTime?.message}
                 required={true}
-                disabled={!preferredDoctor || !consultationType}
-                helpText={!preferredDoctor ? 'Please select a doctor to see available time slots.' : !consultationType ? 'Please select a consultation type to see available time slots.' : ''}
+                disabled={!preferredDoctor || !consultationType || !preferredDate}
+                helpText={!preferredDoctor ? 'Please select a doctor to see available time slots.' : !consultationType ? 'Please select a consultation type to see available time slots.' : !preferredDate ? 'Please select a date to see available time slots.' : timeSlots.length === 0 ? 'Loading time slots...' : ''}
               />
             </div>
 
