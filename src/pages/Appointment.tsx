@@ -19,7 +19,7 @@ const appointmentSchema = z.object({
   mobileNumber: z.string().regex(/^[0-9]{10}$/, 'Please enter a valid 10-digit mobile number'),
   emailAddress: z.string().email('Please enter a valid email').optional().or(z.literal('')),
   preferredDoctor: z.string().min(1, 'Please select a doctor'),
-  consultationType: z.enum(['In-Clinic Visit', 'Online Video Consultation', ''], { message: 'Please select a consultation type' }),
+  consultationType: z.enum(['In-Clinic Visit', 'Online Consultation', ''], { message: 'Please select a consultation type' }),
   preferredDate: z.string().refine((val) => {
     const selectedDate = new Date(val);
     const today = new Date();
@@ -236,7 +236,7 @@ Additional Message: ${data.additionalMessage || 'No additional notes'}`;
               >
                 <option value="">Select Type</option>
                 <option>In-Clinic Visit</option>
-                <option>Online Video Consultation</option>
+                <option>Online Consultation</option>
               </select>
               {errors.consultationType && (
                 <p className="mt-1 text-red-600 text-sm">{errors.consultationType.message}</p>
