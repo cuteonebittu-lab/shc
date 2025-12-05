@@ -73,7 +73,7 @@ const defaultBlogPosts: { [key: string]: BlogPost } = {
 
 const SingleBlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isEditing, getContent, updateContent, getJsonContent } = useContent();
+  const { getContent, getJsonContent } = useContent();
   const [blogPost, setBlogPost] = useState<BlogPost | undefined>(undefined);
 
   // Fetch blog posts from context, fallback to default if not available
