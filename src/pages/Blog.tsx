@@ -31,7 +31,7 @@ const defaultBlogPosts: { [key: string]: BlogPost } = {
     image: '/images/blog/diet.jpg',
     category: 'Modern Medicine',
     date: 'Oct 20, 2023',
-    author: 'Dr. Dhirendra Yadav'
+    author: 'Dr. Sunitha Yadav'
   },
   'blog-3': {
     id: 'blog-3',
