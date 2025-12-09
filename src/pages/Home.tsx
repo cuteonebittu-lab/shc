@@ -93,6 +93,21 @@ const Home: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <ServiceCard
+              icon="fa-solid fa-heart-pulse"
+              title="ECG (Electrocardiogram)"
+              description="Advanced ECG testing for heart health assessment and early detection of cardiac issues."
+            />
+            <ServiceCard
+              icon="fa-solid fa-wind"
+              title="Nebulisation Therapy"
+              description="Effective respiratory treatment for asthma, bronchitis, and other lung conditions using medicated mist."
+            />
+            <ServiceCard
+              icon="fa-solid fa-vial"
+              title="Blood Test for Diabetes"
+              description="Comprehensive blood testing including HbA1c, glucose monitoring, and diabetes management panels."
+            />
+            <ServiceCard
               icon="fa-solid fa-user-md"
               title="General Medicine"
               description="Comprehensive care for diabetes, hypertension, thyroid, and lifestyle disorders."

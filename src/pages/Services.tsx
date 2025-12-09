@@ -11,6 +11,9 @@ const fadeIn = {
 
 const services = {
   drDhirendra: [
+    { icon: '❤️', title: 'ECG (Electrocardiogram)', description: 'Advanced ECG testing for heart health assessment and early detection of cardiac issues.' },
+    { icon: '💨', title: 'Nebulisation Therapy', description: 'Effective respiratory treatment for asthma, bronchitis, and other lung conditions using medicated mist.' },
+    { icon: '🩸', title: 'Blood Test for Diabetes', description: 'Comprehensive blood testing including HbA1c, glucose monitoring, and diabetes management panels.' },
     { icon: '🍬', title: 'Diabetes Management', description: 'Medical therapy, sugar monitoring, lifestyle & diet optimization, uncontrolled diabetes, diabetes complications.' },
     { icon: '❤️', title: 'Hypertension (High Blood Pressure)', description: 'BP management, medication adjustment, cardiac protection.' },
     { icon: '💧', title: 'Renal (Kidney) Impairment', description: 'Chronic kidney disease management, diet & drug monitoring.' },
